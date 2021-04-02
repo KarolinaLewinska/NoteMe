@@ -173,10 +173,7 @@ public class AddNoteActivity extends AppCompatActivity {
             case R.id.deleteNote:
                 if (isExist) {
                     deleteNote();
-                } else {
-                        Toast.makeText(AddNoteActivity.this,
-                                "Brak notatki do usunięcia!", Toast.LENGTH_LONG).show();
-                }
+                } 
                 break;
         }
         return true;
