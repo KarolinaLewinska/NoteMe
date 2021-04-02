@@ -27,7 +27,7 @@ Następnie skonfigurowałyśmy bazę danych oraz mechanizm uwierzytelniania za p
 ![dbRules](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/dbRules.PNG)<br/>
 ![authConfig](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/AuthConfig.PNG)<br/>
 
-**AddNoteActivity**
+**AddNoteActivity**<br/>
 Deklaracja zmiennych (w tym pasek narzędzi, zmienne Firebase i menu, ikona usuwania notatki). Jeśli id notatki nie istnieje to ikona z usuwaniem notatki jest niewidoczna (przy tworzeniu nowej notatki).<br/>
 ![AddNoteActivity1](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/AddNoteActivity1.PNG)<br/>
 Sprawdzenie czy istnieje id notatki (ważne do odróżnienia czy ma zostać dodana nowa notatka czy zaktualizowana istniejąca). Podpięcie zmiennych pod elementy interfejsu. Ustawienie stworzonego paska narzędzi i dodanie do niego ikonki powrotu do interfejsu ze wszystkimi notatkami. Stworzenie instancji autoryzacji Firebase oraz pobranie referencji obiektów w bazie o nazwie „Notatki” zalogowanego obecnie użytkownika.<br/>
@@ -54,10 +54,18 @@ Deklaracja zmiennych. Podpięcie elementów interfejsu pod te zmienne. stworzeni
 ![LoginActivity3](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/LoginActivity3.PNG)<br/>
 
 **RegisterActivity**
-1.	Deklaracja zmiennych, podpięcie elementów interfejsu pod te zmienne, stworzenie instancji Firebase’a, ustawienie w pasku narzędzi możliwości powrotu do HomeActivity. Po wciśnięciu przycisku „zarejestruj się” sprawdzane jest, czy pola są puste. Jeśli tak, to wyświetlany jest komunikat o wymagalności pola. W przeciwnym wypadku następuje rejestracja.
-2.	Podczas rejestracji wyświetla się pasek informujący o przebiegu rejestracji. Po zakończeniu operacji jest on wyłączany. Gdy rejestracja przebiegnie pomyślnie to następuje przejście do panelu logowania oraz wyświetlany jest komunikat o pomyślnym przebiegu rejestracji. W przeciwnym razie wyświetlany jest komunikat o błędzie.
-MainActivity
-1.	Deklaracja zmiennych, ustawienie grid layotu oraz podpięcie go pod recyclerView, który służy do wyświetlania listy notatek. Stworzenie instancji Firebase’a. Sprawdzenie czy użytkownik jest zalogowany, jeśli tak to wyświetlane są jego notatki przy użyciu adaptera. W przeciwnym razie następuje przekierowanie do HomeActivity – metoda setInterface. Metoda loadData służy do załadowania notatek na podstawie modelu z bazy na podstawie referencji. Następnie są one wyświetlane. Po kliknięciu na daną notatkę następuje przekierowanie do edycji – AddNoteActivity. Ustawione jest nowe menu (main_activity_menu) zawierające ikony dodawania notatek oraz wylogowania się z aplikacji. W zależności od wciśniętego przycisku następuje przejście do tworzenia nowej notatki (AddNoteActivity) bądź wylogowanie się z aplikacji i przejście do HomeActivity.
+Stworzony analogicznie do panelu logowania.<br/>
+![RegisterActivity1](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/RegisterActivity1.PNG)<br/>
+![RegisterActivity2](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/RegisterActivity2.PNG)<br/>
+![RegisterActivity3](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/RegisterActivity3.PNG)<br/>
+
+**MainActivity**
+Deklaracja zmiennych, konfiguracja wyświetlania dynamicznej listy notatek. Stworzenie instancji Firebase’a. Sprawdzenie czy użytkownik jest zalogowany, jeśli tak to wyświetlane są jego notatki przy użyciu adaptera. W przeciwnym razie następuje przekierowanie do HomeActivity – metoda setInterface. Metoda loadData służy do załadowania notatek. Po kliknięciu na daną notatkę następuje przekierowanie do edycji – AddNoteActivity<br/>
+![MainActivity1](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/MainActivity1.PNG)<br/>
+![MainActivity2](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/MainActivity2.PNG)<br/>
+Ustawione jest nowe menu (main_activity_menu) zawierające ikony dodawania notatek oraz wylogowania się z aplikacji. W zależności od wciśniętego przycisku następuje przejście do tworzenia nowej notatki (AddNoteActivity) bądź wylogowanie się z aplikacji i przejście do HomeActivity.<br/>
+![MainActivity3](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/MainActivity3.PNG)<br/>
+![MainActivity4](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/MainActivity4.PNG)<br/>
 
 NoteModel
 Model notatki potrzebny do wyświetlenia tytułu i daty notatek w MainActivity.
