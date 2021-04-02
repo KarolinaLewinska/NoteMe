@@ -20,6 +20,7 @@
 ![LoginActivity](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/loginview.PNG)
 ![RegisterActivity](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/registerview.PNG)
 ![MainActivity](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/mainactivity.PNG)
+![newNoteView](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/newNoteView.PNG)
 
 **Opis realizacji projektu:**<br/>
 Na początku stworzyłyśmy [logo aplikacji](https://www.freelogodesign.org/)<br/>
