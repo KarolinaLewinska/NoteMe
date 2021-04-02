@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "608514253122",
+    "firebase_url": "https://notemedb-default-rtdb.firebaseio.com",
+    "project_id": "notemedb",
+    "storage_bucket": "notemedb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:608514253122:android:d1be8d15684766080068db",
+        "android_client_info": {
+          "package_name": "com.example.noteme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "608514253122-p7ss0tj4h780vcpkf3ndntfup8r9retr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3_jEWULRCDAQ8Ui7kg9_dqeNevetqf2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "608514253122-p7ss0tj4h780vcpkf3ndntfup8r9retr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

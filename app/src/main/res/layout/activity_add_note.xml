@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10px"
+    tools:context=".AddNoteActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/addNoteToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"/>
+
+
+        <EditText
+            android:id="@+id/titleEditText"
+            android:layout_width="match_parent"
+            android:layout_height="63dp"
+            android:layout_margin="10px"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:background="@android:color/transparent"
+            android:hint="Tytuł notatki"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+            android:textColor="#FF9800" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:alpha=".4"
+            android:background="@android:color/holo_orange_dark" />
+
+        <EditText
+            android:id="@+id/contentEditText"
+            android:layout_width="match_parent"
+            android:layout_height="527dp"
+            android:layout_margin="10px"
+            android:background="@android:color/transparent"
+            android:ems="10"
+            android:gravity="start"
+            android:hint="Treść..."
+            android:inputType="textMultiLine"
+            android:padding="10dp" />
+
+        <Button
+            android:id="@+id/addNoteButton"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:backgroundTint="@android:color/holo_orange_light"
+            android:text="Zatwierdź" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
