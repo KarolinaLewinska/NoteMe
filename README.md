@@ -15,14 +15,19 @@
 **TimeOfNote** – klasa stworzona w celu zamiany czasu edycji notatki (wyświetlanego w MainActivity). Czas edycji podzielono na kategorie takie jak m.in. „przed chwilą”, „wczoraj”, "minutę temu"<br/>
 
 **Interfejsy aplikacji:**<br/>
+![HomeActivity](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/homeactivity.PNG)
 ![AddNoteActivity](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/EditNoteView.PNG)
+![LoginActivity](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/loginview.PNG)
+![RegisterActivity](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/registerview.PNG)
+![MainActivity](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/mainactivity.PNG)
 
-Opis realizacji projektu:
-Na początku stworzyłyśmy logo aplikacji
-Następnie stworzyłyśmy i skonfigurowałyśmy bazę danych oraz mechanizm uwierzytelniania za pomocą adresu email i hasła
+**Opis realizacji projektu:**<br/>
+Na początku stworzyłyśmy [logo aplikacji](https://www.freelogodesign.org/)<br/>
+Następnie skonfigurowałyśmy bazę danych oraz mechanizm uwierzytelniania za pomocą adresu email i hasła<br/>
+![dbRules](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/dbRules.PNG)<br/>
+![authConfig](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/AuthConfig.PNG)<br/>
 
-Kod aplikacji: 
-AddNoteActivity:
+**AddNoteActivity**
 1.	Deklaracja zmiennych (w tym pasek narzędzi, zmienne Firebase i menu) oraz ustawienie nowego menu z ikonką do usuwania notatki. Jeśli id notatki nie istnieje ikona z usuwaniem jest niewidoczna (przy tworzeniu nowej notatki).
 2.	Sprawdzenie czy istnieje id notatki (ważne do odróżnienia czy ma zostać dodana nowa notatka czy zaktualizowana istniejąca stworzona). Podpięcie zmiennych pod elementy interfejsu. Ustawienie stworzonego paska narzędzi i dodanie do niego ikonki powrotu do interfejsu ze wszystkimi notatkami. Stworzenie instancji autoryzacji Firebase oraz pobranie referencji obiektów w bazie o nazwie „Notatki” zalogowanego obecnie użytkownika.
 3.	Po kliknięciu przycisku dane zapisywane są w bazie, sprawdzana jest walidacja na puste pola. Jeśli któreś z pól jest puste ukazuje się użytkownikowi komunikat o wymagalności obu pól. Metoda showCurrentNote wyświetla dane z istniejących już notatek.
