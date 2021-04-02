@@ -3,7 +3,7 @@
 **Autorzy:** Karolina Lewińska, Justyna Gapys<br/>
 **Cel aplikacji:** Aplikacja pozwalająca na zapis, odczyt, edycję i usuwanie stworzonych przez użytkownika notatek.<br/>
 **Język:** Java<br/>
-**Baza danych:** Firebase<br/>
+**Baza danych:** Firebase<br/><br/>
 **Struktura projektu:**<br/>
 **AddNoteActivity** – interfejs odpowiadający za dodawanie, usuwanie oraz edycję notatki<br/>
 **HomeActivity** – ekran początkowy z przyciskami do logowania i rejestracji<br/>
