@@ -23,8 +23,8 @@
 ![newNoteView](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/newNoteView.PNG)
 
 **Opis realizacji projektu:**<br/>
-Na początku stworzyłyśmy [logo aplikacji](https://www.freelogodesign.org/)<br/>
-Następnie skonfigurowałyśmy bazę danych oraz mechanizm uwierzytelniania za pomocą adresu email i hasła<br/>
+Na początku stworzyłyśmy [logo aplikacji](https://www.freelogodesign.org/).<br/>
+Następnie skonfigurowałyśmy bazę danych oraz mechanizm uwierzytelniania za pomocą adresu email i hasła.<br/>
 ![dbRules](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/dbRules.PNG)<br/>
 ![authConfig](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/AuthConfig.PNG)<br/>
 
