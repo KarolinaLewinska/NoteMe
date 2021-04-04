@@ -1,6 +1,6 @@
 # NoteMe_AndroidStudio
 **Nazwa aplikacji:** NoteMe<br/>
-**Autorzy:** Karolina Lewińska, Justyna Gapys<br/>
+**Autorzy:** [Karolina Lewińska](https://github.com/KarolinaLewinska), [Justyna Gapys](https://github.com/justynagapys)<br/>
 **Cel aplikacji:** Aplikacja pozwalająca na zapis, odczyt, edycję i usuwanie stworzonych przez użytkownika notatek.<br/>
 **Język:** Java<br/>
 **Baza danych:** Firebase<br/><br/>
