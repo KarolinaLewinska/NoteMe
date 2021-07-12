@@ -1,5 +1,5 @@
 # NoteMe App
-Application lets add, edit and delete notes which are saved in the Firebase database<br/>
+Application lets add, edit and delete notes which are saved in the Firebase database. It also includes authentication.<br/>
 **Interfaces:**<br/>
 ![HomeActivity](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/homeactivity.PNG)
 ![AddNoteActivity](https://github.com/KarolinaLewinska/NoteMe_AndroidStudio/blob/master/Screenshots/EditNoteView.PNG)
