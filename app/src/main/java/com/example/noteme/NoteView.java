@@ -7,10 +7,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class NoteView extends RecyclerView.ViewHolder {
-
     View view;
-    TextView noteTitle;
-    TextView noteTimestamp;
+    TextView noteTitle, noteTimestamp;
     CardView noteCard;
 
     public NoteView(@NonNull View itemView) {

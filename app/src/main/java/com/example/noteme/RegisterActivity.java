@@ -18,9 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
-    private Button signinButton;
-    private EditText emailEditText;
-    private EditText passwordEditText;
+    private Button signInButton;
+    private EditText userEmail, userPassword;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
     private ProgressDialog progressDialog;
@@ -30,9 +29,9 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        signinButton = (Button) findViewById(R.id.signinButton);
-        emailEditText = (EditText) findViewById(R.id.editTextEmail);
-        passwordEditText = (EditText) findViewById(R.id.editTextPassword);
+        signInButton = (Button) findViewById(R.id.signinButton);
+        userEmail = (EditText) findViewById(R.id.editTextEmail);
+        userPassword = (EditText) findViewById(R.id.editTextPassword);
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -40,30 +39,29 @@ public class RegisterActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-
-        signinButton.setOnClickListener(new View.OnClickListener() {
+        signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (emailEditText.length() == 0) {
-                    emailEditText.setError("Pole wymagane!");
+                if (userEmail.length() == 0) {
+                    userEmail.setError("Pole wymagane!");
                 }
-                if (passwordEditText.length() == 0) {
-                    passwordEditText.setError("Pole wymagane!");
+                if (userPassword.length() == 0) {
+                    userPassword.setError("Pole wymagane!");
                 }
                 else {
-                    String email = emailEditText.getText().toString();
-                    String password = passwordEditText.getText().toString();
+                    String email = userEmail.getText().toString();
+                    String password = userPassword.getText().toString();
                     Register(email, password);
                 }
             }
         });
     }
+
     private void Register(String email, String password) {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Trwa rejestracja, prosze czekać...");
         progressDialog.show();
-        firebaseAuth.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
@@ -81,6 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);

@@ -21,7 +21,6 @@ import com.google.firebase.database.ValueEventListener;
 
 
 public class MainActivity extends AppCompatActivity {
-
     private FirebaseAuth firebaseAuth;
     private RecyclerView recyclerView;
     private GridLayoutManager gridLayoutManager;
@@ -31,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         gridLayoutManager = new GridLayoutManager(this,
                 3, GridLayoutManager.VERTICAL, false);
 
@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
             databaseReference = FirebaseDatabase.getInstance().getReference()
                     .child("Notatki").child(firebaseAuth.getCurrentUser().getUid());
         }
-
         setInterface();
         loadData();
     }
@@ -51,18 +50,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+    }
 
+    private void setInterface() {
+        if (firebaseAuth.getCurrentUser() == null) {
+            Intent homeIntent = new Intent(MainActivity.this, HomeActivity.class);
+            startActivity(homeIntent);
+            finish();
+        }
     }
 
     private void loadData() {
         Query query = databaseReference.orderByValue();
-        FirebaseRecyclerAdapter<NoteModel,
-                NoteView> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<NoteModel, NoteView>(
+        FirebaseRecyclerAdapter<NoteModel, NoteView> firebaseRecyclerAdapter
+                = new FirebaseRecyclerAdapter<NoteModel, NoteView>(
                     NoteModel.class,
                     R.layout.note_view,
                     NoteView.class,
-                    query
-        ) {
+                    query) {
             @Override
             protected void populateViewHolder(NoteView noteView, NoteModel noteModel, int i) {
                 String noteId = getRef(i).getKey();
@@ -79,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                             TimeOfNote timeOfNote = new TimeOfNote();
                             noteView.setNoteTimestamp(timeOfNote.getTimeModification
                                     (Long.parseLong(timestamp), getApplicationContext()));
+
                             noteView.noteCard.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -100,14 +106,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(firebaseRecyclerAdapter);
     }
 
-    private void setInterface() {
-        if (firebaseAuth.getCurrentUser() == null) {
-            Intent homeIntent = new Intent(MainActivity.this, HomeActivity.class);
-            startActivity(homeIntent);
-            finish();
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -127,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.exitButton:
                 firebaseAuth.signOut();
                 Toast.makeText(MainActivity.this,
-                        "Wylogowano, wracaj do nas szybko!", Toast.LENGTH_LONG). show();
+                        "Wylogowano!", Toast.LENGTH_LONG). show();
                 Intent homeIntent = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(homeIntent);
                 finish();
