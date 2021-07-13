@@ -41,9 +41,9 @@ public class AddOrEditNoteActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.new_note_menu, menu);
 
         deleteIcon = menu.findItem(R.id.deleteNote);
-        if (idNote == null) {
+        if (idNote == null)
             deleteIcon.setVisible(false);
-        }
+
         return true;
     }
 
@@ -136,8 +136,8 @@ public class AddOrEditNoteActivity extends AppCompatActivity {
                                 Toast.makeText(AddOrEditNoteActivity.this,
                                         "Notatka utworzona!", Toast.LENGTH_LONG).show();
 
-                                Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
-                                startActivity(mainActivity);
+                                Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(mainIntent);
 
                             } else {
                                 Toast.makeText(AddOrEditNoteActivity.this,
@@ -152,8 +152,8 @@ public class AddOrEditNoteActivity extends AppCompatActivity {
         } else {
             Toast.makeText(AddOrEditNoteActivity.this,
                     "Brak zalogowanego użytkownika!", Toast.LENGTH_LONG).show();
-            Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
-            startActivity(homeActivity);
+            Intent homeIntent = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(homeIntent);
         }
     }
 
@@ -168,21 +168,21 @@ public class AddOrEditNoteActivity extends AppCompatActivity {
 
                 Toast.makeText(AddOrEditNoteActivity.this,
                         "Notatka została zaktualizowana!", Toast.LENGTH_LONG).show();
-                Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(mainActivity);
+                Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(mainIntent);
 
             } else {
                 Toast.makeText(AddOrEditNoteActivity.this,
                         "Wystąpił błąd podczas auktualizacji!", Toast.LENGTH_LONG).show();
-                Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(mainActivity);
+                Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(mainIntent);
             }
 
         } else {
             Toast.makeText(AddOrEditNoteActivity.this,
                     "Brak zalogowanego użytkownika!", Toast.LENGTH_LONG).show();
-            Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
-            startActivity(homeActivity);
+            Intent homeIntent = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(homeIntent);
         }
     }
 
@@ -218,8 +218,8 @@ public class AddOrEditNoteActivity extends AppCompatActivity {
                     Toast.makeText(AddOrEditNoteActivity.this,
                             "Wystąpił błąd podczas próby usunięcia!", Toast.LENGTH_LONG).show();
 
-                    Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(mainActivity);
+                    Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(mainIntent);
                 }
             }
         });
