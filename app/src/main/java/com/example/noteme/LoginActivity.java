@@ -17,11 +17,9 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText userEmail;
-    private EditText userPassword;
+    private EditText userEmail, userPassword;
     private Button userLoginButton;
     private FirebaseAuth firebaseAuth;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
         userLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (userEmail.length() == 0) {
                     userEmail.setError("Pole wymagane!");
                 }
@@ -50,15 +47,15 @@ public class LoginActivity extends AppCompatActivity {
                 else {
                     String email = userEmail.getText().toString();
                     String password = userPassword.getText().toString();
-                    logInUser(email, password);
+                    signIn(email, password);
                 }
             }
         });
     }
 
-    private void logInUser(String email, String password) {
+    private void signIn(String email, String password) {
         ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Trwa logowanie, prosze czekać...");
+        progressDialog.setMessage("Trwa logowanie, proszę czekać...");
         progressDialog.show();
 
         firebaseAuth.signInWithEmailAndPassword(email, password)
@@ -72,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(mainIntent);
                     finish();
                     Toast.makeText(LoginActivity.this,
-                            "Logowanie przebiegło pomyślnie!", Toast.LENGTH_LONG).show();
+                            "Zalogowano!", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(LoginActivity.this,
                             "Błąd logowania!", Toast.LENGTH_LONG).show();
@@ -84,6 +81,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
+
         switch(item.getItemId()) {
             case android.R.id.home:
                 finish();

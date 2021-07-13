@@ -9,8 +9,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private Button loginButton;
-    private Button registerButton;
+    private Button loginButton, registerButton;
     private FirebaseAuth firebaseAuth;
 
     @Override
