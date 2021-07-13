@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NoteMe">
-        <activity android:name=".AddNoteActivity"
+        <activity android:name=".AddOrEditNoteActivity"
             android:theme="@style/Theme.Design.NoActionBar"
             android:label="Moje notatki"></activity>
         <activity

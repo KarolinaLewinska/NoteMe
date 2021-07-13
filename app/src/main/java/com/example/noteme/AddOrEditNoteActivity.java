@@ -3,6 +3,8 @@ package com.example.noteme;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,23 +24,22 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddNoteActivity extends AppCompatActivity {
+public class AddOrEditNoteActivity extends AppCompatActivity {
 
-    private Button noteCreate;
-    private EditText noteTitle;
-    private EditText noteContent;
+    private Button addOrEditNoteButton;
+    private EditText noteTitle, noteContent;
     private Toolbar newNoteToolbar;
-
-    private FirebaseAuth firebaseAuth;
-    private DatabaseReference databaseReference;
+    private MenuItem deleteIcon;
     private String idNote = "";
     private boolean isExist;
-    private MenuItem deleteIcon;
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReference;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.new_note_menu, menu);
+
         deleteIcon = menu.findItem(R.id.deleteNote);
         if (idNote == null) {
             deleteIcon.setVisible(false);
@@ -53,17 +54,17 @@ public class AddNoteActivity extends AppCompatActivity {
 
         try {
             idNote = getIntent().getStringExtra("noteId");
-            if (!idNote.equals("")) {
-                isExist = true;
-            } else {
-                isExist = false;
-            }
 
-        } catch(Exception exc) {
+            if (idNote.equals(""))
+                isExist = false;
+            else
+                isExist = true;
+
+        } catch (Exception exc) {
             exc.getMessage();
         }
 
-        noteCreate = (Button) findViewById(R.id.addNoteButton);
+        addOrEditNoteButton = (Button) findViewById(R.id.addNoteButton);
         noteTitle = (EditText) findViewById(R.id.titleEditText);
         noteContent = (EditText) findViewById(R.id.contentEditText);
         newNoteToolbar = (Toolbar) findViewById(R.id.addNoteToolbar);
@@ -76,19 +77,22 @@ public class AddNoteActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference()
                 .child("Notatki").child(firebaseAuth.getCurrentUser().getUid());
 
-        noteCreate.setOnClickListener(new View.OnClickListener() {
+        addOrEditNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String title = noteTitle.getText().toString();
                 String content = noteContent.getText().toString();
 
-                if (noteTitle.length() == 0) {
+                if (noteTitle.length() == 0)
                     noteTitle.setError("Wprowadź tytuł notatki");
-                }
-                if (noteContent.length() == 0) {
+
+                if (noteContent.length() == 0)
                    noteContent.setError("Wprowadź treść notatki");
-                }
-                createNote(title, content);
+
+                if (isExist)
+                    updateNote(title, content);
+                else
+                    createNote(title, content);
             }
         });
         showCurrentNote();
@@ -116,49 +120,69 @@ public class AddNoteActivity extends AppCompatActivity {
 
     private void createNote(String title, String content) {
         if (firebaseAuth.getCurrentUser() != null) {
+            DatabaseReference databaseReference2 = databaseReference.push();
+            Map newNotesHashMap = new HashMap();
+            newNotesHashMap.put("Tytuł", title);
+            newNotesHashMap.put("Treść notatki", content);
+            newNotesHashMap.put("Czas utworzenia", ServerValue.TIMESTAMP);
+
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    databaseReference2.setValue(newNotesHashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(AddOrEditNoteActivity.this,
+                                        "Notatka utworzona!", Toast.LENGTH_LONG).show();
+
+                                Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(mainActivity);
+
+                            } else {
+                                Toast.makeText(AddOrEditNoteActivity.this,
+                                        "Wystąpił błąd podczas zapisu!", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+                }
+            });
+            thread.start();
+
+        } else {
+            Toast.makeText(AddOrEditNoteActivity.this,
+                    "Brak zalogowanego użytkownika!", Toast.LENGTH_LONG).show();
+            Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(homeActivity);
+        }
+    }
+
+    private void updateNote(String title, String content) {
+        if (firebaseAuth.getCurrentUser() != null) {
             if (isExist) {
-                Map hasMapUpdate = new HashMap();
-                hasMapUpdate.put("Tytuł", noteTitle.getText().toString());
-                hasMapUpdate.put("Treść notatki", noteContent.getText().toString());
-                hasMapUpdate.put("Czas utworzenia", ServerValue.TIMESTAMP);
-                databaseReference.child(idNote).updateChildren(hasMapUpdate);
-                Toast.makeText(AddNoteActivity.this,
+                Map currentNoteHashMap = new HashMap();
+                currentNoteHashMap.put("Tytuł", noteTitle.getText().toString());
+                currentNoteHashMap.put("Treść notatki", noteContent.getText().toString());
+                currentNoteHashMap.put("Czas utworzenia", ServerValue.TIMESTAMP);
+                databaseReference.child(idNote).updateChildren(currentNoteHashMap);
+
+                Toast.makeText(AddOrEditNoteActivity.this,
                         "Notatka została zaktualizowana!", Toast.LENGTH_LONG).show();
+                Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(mainActivity);
 
             } else {
-
-                DatabaseReference databaseReference2 = databaseReference.push();
-
-                Map hashMap = new HashMap();
-                hashMap.put("Tytuł", title);
-                hashMap.put("Treść notatki", content);
-                hashMap.put("Czas utworzenia", ServerValue.TIMESTAMP);
-
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        databaseReference2.setValue(hashMap)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(AddNoteActivity.this,
-                                            "Notatka utworzona!", Toast.LENGTH_LONG).show();
-                                }
-                                else {
-                                    Toast.makeText(AddNoteActivity.this,
-                                            "Wystąpił błąd zapisu notatki!", Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        });
-                    }
-                });
-                thread.start();
+                Toast.makeText(AddOrEditNoteActivity.this,
+                        "Wystąpił błąd podczas auktualizacji!", Toast.LENGTH_LONG).show();
+                Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(mainActivity);
             }
 
         } else {
-            Toast.makeText(AddNoteActivity.this,
+            Toast.makeText(AddOrEditNoteActivity.this,
                     "Brak zalogowanego użytkownika!", Toast.LENGTH_LONG).show();
+            Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(homeActivity);
         }
     }
 
@@ -171,27 +195,31 @@ public class AddNoteActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.deleteNote:
-                if (isExist) {
+                if (isExist)
                     deleteNote();
-                } 
+                else
+                    finish();
                 break;
         }
         return true;
     }
 
     private void deleteNote() {
-        databaseReference.child(idNote).removeValue()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReference.child(idNote).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(AddNoteActivity.this,
+                    Toast.makeText(AddOrEditNoteActivity.this,
                             "Usunięto notatkę!", Toast.LENGTH_LONG).show();
-                    idNote = "none";
+                    idNote = "";
                     finish();
+
                 } else {
-                    Toast.makeText(AddNoteActivity.this,
-                            "Wystąpił błąd!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddOrEditNoteActivity.this,
+                            "Wystąpił błąd podczas próby usunięcia!", Toast.LENGTH_LONG).show();
+
+                    Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(mainActivity);
                 }
             }
         });

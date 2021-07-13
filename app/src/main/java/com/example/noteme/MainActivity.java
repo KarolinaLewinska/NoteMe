@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                             noteView.noteCard.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
+                                    Intent intent = new Intent(MainActivity.this, AddOrEditNoteActivity.class);
                                     intent.putExtra("noteId", noteId);
                                     startActivity(intent);
                                 }
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch(item.getItemId()) {
             case R.id.addNoteButton:
-                Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
+                Intent intent = new Intent(MainActivity.this, AddOrEditNoteActivity.class);
                 startActivity(intent);
                 break;
             case R.id.exitButton:
