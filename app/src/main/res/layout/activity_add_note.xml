@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/addNoteToolbar"
+            android:id="@+id/noteToolbar"
             android:layout_width="match_parent"
             android:layout_height="67dp"
             android:background="?attr/colorPrimary"

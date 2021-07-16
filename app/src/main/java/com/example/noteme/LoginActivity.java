@@ -1,7 +1,5 @@
 package com.example.noteme;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -43,8 +45,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 if (userPassword.length() == 0) {
                     userPassword.setError("Pole wymagane!");
-                }
-                else {
+                } else {
                     String email = userEmail.getText().toString();
                     String password = userPassword.getText().toString();
                     signIn(email, password);
@@ -60,29 +61,29 @@ public class LoginActivity extends AppCompatActivity {
 
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                progressDialog.dismiss();
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressDialog.dismiss();
 
-                if (task.isSuccessful()) {
-                    Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(mainIntent);
-                    finish();
-                    Toast.makeText(LoginActivity.this,
-                            "Zalogowano!", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(LoginActivity.this,
-                            "Błąd logowania!", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+                        if (task.isSuccessful()) {
+                            Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(mainIntent);
+                            finish();
+                            Toast.makeText(LoginActivity.this,
+                                    "Zalogowano!", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(LoginActivity.this,
+                                    "Błąd logowania!", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
 
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 break;

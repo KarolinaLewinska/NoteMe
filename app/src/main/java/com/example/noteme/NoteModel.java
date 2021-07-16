@@ -9,6 +9,7 @@ public class NoteModel {
     public NoteModel() {
 
     }
+
     public NoteModel(String title, String timestamp) {
         this.title = title;
         this.timestamp = timestamp;

@@ -1,9 +1,5 @@
 package com.example.noteme;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,6 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,10 +30,10 @@ public class AddOrEditNoteActivity extends AppCompatActivity {
 
     private Button addOrEditNoteButton;
     private EditText noteTitle, noteContent;
-    private Toolbar newNoteToolbar;
-    private MenuItem deleteIcon;
-    private String idNote = "";
-    private boolean isExist;
+    private Toolbar noteToolbar;
+    private MenuItem deleteNoteMenuItem;
+    private String noteID = "";
+    private boolean noteExists;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
 
@@ -40,10 +42,10 @@ public class AddOrEditNoteActivity extends AppCompatActivity {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.new_note_menu, menu);
 
-        deleteIcon = menu.findItem(R.id.deleteNote);
-        if (idNote == null)
-            deleteIcon.setVisible(false);
-
+        deleteNoteMenuItem = menu.findItem(R.id.deleteNote);
+        if (noteID == null) {
+            deleteNoteMenuItem.setVisible(false);
+        }
         return true;
     }
 
@@ -53,12 +55,8 @@ public class AddOrEditNoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_note);
 
         try {
-            idNote = getIntent().getStringExtra("noteId");
-
-            if (idNote.equals(""))
-                isExist = false;
-            else
-                isExist = true;
+            noteID = getIntent().getStringExtra("noteId");
+            noteExists = !noteID.equals("");
 
         } catch (Exception exc) {
             exc.getMessage();
@@ -67,9 +65,9 @@ public class AddOrEditNoteActivity extends AppCompatActivity {
         addOrEditNoteButton = (Button) findViewById(R.id.addNoteButton);
         noteTitle = (EditText) findViewById(R.id.titleEditText);
         noteContent = (EditText) findViewById(R.id.contentEditText);
-        newNoteToolbar = (Toolbar) findViewById(R.id.addNoteToolbar);
+        noteToolbar = (Toolbar) findViewById(R.id.noteToolbar);
 
-        setSupportActionBar(newNoteToolbar);
+        setSupportActionBar(noteToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -83,24 +81,23 @@ public class AddOrEditNoteActivity extends AppCompatActivity {
                 String title = noteTitle.getText().toString();
                 String content = noteContent.getText().toString();
 
-                if (noteTitle.length() == 0)
-                    noteTitle.setError("Wprowadź tytuł notatki");
-
-                if (noteContent.length() == 0)
-                   noteContent.setError("Wprowadź treść notatki");
-
-                if (isExist)
-                    updateNote(title, content);
-                else
-                    createNote(title, content);
+                if (FieldsValidator.checkEmptyFields(noteTitle, noteContent)) {
+                    if (noteExists) {
+                        updateNote(title, content);
+                    }
+                    else {
+                        createNote(title, content);
+                    }
+                }
             }
         });
+
         showCurrentNote();
     }
 
     private void showCurrentNote() {
-        if (isExist) {
-            databaseReference.child(idNote).addValueEventListener(new ValueEventListener() {
+        if (noteExists) {
+            databaseReference.child(noteID).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.hasChild("Tytuł") && snapshot.hasChild("Treść notatki")) {
@@ -110,6 +107,7 @@ public class AddOrEditNoteActivity extends AppCompatActivity {
                         noteContent.setText(content);
                     }
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 
@@ -121,6 +119,7 @@ public class AddOrEditNoteActivity extends AppCompatActivity {
     private void createNote(String title, String content) {
         if (firebaseAuth.getCurrentUser() != null) {
             DatabaseReference databaseReference2 = databaseReference.push();
+
             Map newNotesHashMap = new HashMap();
             newNotesHashMap.put("Tytuł", title);
             newNotesHashMap.put("Treść notatki", content);
@@ -135,7 +134,6 @@ public class AddOrEditNoteActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Toast.makeText(AddOrEditNoteActivity.this,
                                         "Notatka utworzona!", Toast.LENGTH_LONG).show();
-
                                 Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(mainIntent);
 
@@ -159,12 +157,13 @@ public class AddOrEditNoteActivity extends AppCompatActivity {
 
     private void updateNote(String title, String content) {
         if (firebaseAuth.getCurrentUser() != null) {
-            if (isExist) {
+            if (noteExists) {
                 Map currentNoteHashMap = new HashMap();
                 currentNoteHashMap.put("Tytuł", noteTitle.getText().toString());
                 currentNoteHashMap.put("Treść notatki", noteContent.getText().toString());
                 currentNoteHashMap.put("Czas utworzenia", ServerValue.TIMESTAMP);
-                databaseReference.child(idNote).updateChildren(currentNoteHashMap);
+
+                databaseReference.child(noteID).updateChildren(currentNoteHashMap);
 
                 Toast.makeText(AddOrEditNoteActivity.this,
                         "Notatka została zaktualizowana!", Toast.LENGTH_LONG).show();
@@ -190,34 +189,35 @@ public class AddOrEditNoteActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
 
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 break;
             case R.id.deleteNote:
-                if (isExist)
+                if (noteExists) {
                     deleteNote();
-                else
+                }
+                else {
                     finish();
+                }
                 break;
         }
         return true;
     }
 
     private void deleteNote() {
-        databaseReference.child(idNote).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReference.child(noteID).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(AddOrEditNoteActivity.this,
                             "Usunięto notatkę!", Toast.LENGTH_LONG).show();
-                    idNote = "";
+                    noteID = "";
                     finish();
 
                 } else {
                     Toast.makeText(AddOrEditNoteActivity.this,
                             "Wystąpił błąd podczas próby usunięcia!", Toast.LENGTH_LONG).show();
-
                     Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(mainIntent);
                 }
