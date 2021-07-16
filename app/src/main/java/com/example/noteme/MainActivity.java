@@ -80,10 +80,9 @@ public class MainActivity extends AppCompatActivity {
                         if (snapshot.hasChild("Tytuł") && snapshot.hasChild("Czas utworzenia")) {
                             String title = snapshot.child("Tytuł").getValue().toString();
                             String timestamp = snapshot.child("Czas utworzenia").getValue().toString();
+                            TimeOfNote timeOfNote = new TimeOfNote();
 
                             noteView.setNoteTitle(title);
-
-                            TimeOfNote timeOfNote = new TimeOfNote();
                             noteView.setNoteTimestamp(timeOfNote.getTimeModification
                                     (Long.parseLong(timestamp), getApplicationContext()));
 

@@ -40,12 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (userEmail.length() == 0) {
-                    userEmail.setError("Pole wymagane!");
-                }
-                if (userPassword.length() == 0) {
-                    userPassword.setError("Pole wymagane!");
-                } else {
+                if (FieldsValidator.checkEmptyFields(userEmail, userPassword)) {
                     String email = userEmail.getText().toString();
                     String password = userPassword.getText().toString();
                     signIn(email, password);
@@ -61,22 +56,22 @@ public class LoginActivity extends AppCompatActivity {
 
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressDialog.dismiss();
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                progressDialog.dismiss();
 
-                        if (task.isSuccessful()) {
-                            Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(mainIntent);
-                            finish();
-                            Toast.makeText(LoginActivity.this,
-                                    "Zalogowano!", Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(LoginActivity.this,
-                                    "Błąd logowania!", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+                if (task.isSuccessful()) {
+                    Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(mainIntent);
+                    finish();
+                    Toast.makeText(LoginActivity.this,
+                            "Zalogowano!", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(LoginActivity.this,
+                            "Błąd logowania!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     @Override

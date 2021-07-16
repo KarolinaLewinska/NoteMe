@@ -44,13 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (userEmail.length() == 0) {
-                    userEmail.setError("Pole wymagane!");
-                }
-                if (userPassword.length() == 0) {
-                    userPassword.setError("Pole wymagane!");
-                }
-                else {
+                if (FieldsValidator.checkEmptyFields(userEmail, userPassword)) {
                     String email = userEmail.getText().toString();
                     String password = userPassword.getText().toString();
                     Register(email, password);
