@@ -100,7 +100,9 @@ public class AddOrEditNoteActivity extends AppCompatActivity {
             databaseReference.child(noteID).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.hasChild("Tytuł") && snapshot.hasChild("Treść notatki")) {
+                    boolean hasTitle = snapshot.hasChild("Tytuł");
+                    boolean hasContent = snapshot.hasChild("Treść notatki");
+                    if (hasTitle && hasContent) {
                         String title = snapshot.child("Tytuł").getValue().toString();
                         String content = snapshot.child("Treść notatki").getValue().toString();
                         noteTitle.setText(title);
@@ -169,14 +171,12 @@ public class AddOrEditNoteActivity extends AppCompatActivity {
                         "Notatka została zaktualizowana!", Toast.LENGTH_LONG).show();
                 Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(mainIntent);
-
             } else {
                 Toast.makeText(AddOrEditNoteActivity.this,
                         "Wystąpił błąd podczas auktualizacji!", Toast.LENGTH_LONG).show();
                 Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(mainIntent);
             }
-
         } else {
             Toast.makeText(AddOrEditNoteActivity.this,
                     "Brak zalogowanego użytkownika!", Toast.LENGTH_LONG).show();

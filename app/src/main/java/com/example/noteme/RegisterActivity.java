@@ -70,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
                 } else {
                     progressDialog.dismiss();
                     Toast.makeText(RegisterActivity.this,
-                            "Nie udało się zarejestrować użytkownika!", Toast.LENGTH_LONG).show();
+                            "Wystąpił błąd podczas próby rejestracji!", Toast.LENGTH_LONG).show();
                 }
             }
         });

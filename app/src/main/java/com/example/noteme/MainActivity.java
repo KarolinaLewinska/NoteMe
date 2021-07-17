@@ -77,7 +77,9 @@ public class MainActivity extends AppCompatActivity {
                 databaseReference.child(noteId).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.hasChild("Tytuł") && snapshot.hasChild("Czas utworzenia")) {
+                        boolean hasTitle = snapshot.hasChild("Tytuł");
+                        boolean hasTimestamp = snapshot.hasChild("Czas utworzenia");
+                        if (hasTitle && hasTimestamp) {
                             String title = snapshot.child("Tytuł").getValue().toString();
                             String timestamp = snapshot.child("Czas utworzenia").getValue().toString();
                             TimeOfNote timeOfNote = new TimeOfNote();

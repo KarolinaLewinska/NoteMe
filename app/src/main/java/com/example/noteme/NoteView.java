@@ -14,7 +14,6 @@ public class NoteView extends RecyclerView.ViewHolder {
 
     public NoteView(@NonNull View itemView) {
         super(itemView);
-
         view = itemView;
         noteTitle = view.findViewById(R.id.note_title);
         noteTimestamp = view.findViewById(R.id.note_timestamp);
