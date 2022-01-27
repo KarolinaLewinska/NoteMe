@@ -1,5 +1,5 @@
 # NoteMe App
-**Co-author:** [Justyna Gapys](https://github.com/justynagapys).<br/>
+**Co-author:** [Justyna Gapys](https://github.com/justynagapys)<br/>
 
 ## Description
 Application lets add, edit and delete notes which are saved in the Firebase Realtime Database. It also includes user authentication.<br/>
